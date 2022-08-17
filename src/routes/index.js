@@ -7,7 +7,7 @@ const { Router } = require('express');
 const {routefilter} = require('../Controllers/controllerFilters_copy')
 
 
-const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable} = require('../Controllers/controllerAppointments')
+const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser} = require('../Controllers/controllerAppointments')
 
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
@@ -52,6 +52,7 @@ router.get('/appointments/ad/:adId', getAppointmentsByAdAvailable)
     
 router.get('/appointments/id/:id' , getAppointmentById)
 
+router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
 // ******** POSTS ***********//
 
 // Create a new User. 
