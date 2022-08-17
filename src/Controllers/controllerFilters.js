@@ -15,7 +15,7 @@ const routefilter=async(req,res,next)=>{
       })
         
         let newFilter = []
-        if(name === 'undefined'&& specialty==='undefined' && country === 'undefined' && province === 'undefined' && city === 'undefined'){
+        if(typeService === 'undefined'&& specialty==='undefined' && country === 'undefined' && province === 'undefined' && city === 'undefined'){
             console.log('1');
             return res.status(200).send(adFilter)
         }else{
@@ -122,13 +122,13 @@ const routefilter=async(req,res,next)=>{
                 }         
                     console.log('entre en el correcto, solo especialidad!!!!!!')
                     newFilter= adFilter.filter(e=> e.specialty===specialty)
+                    
                     return res.status(200).send(newFilter)              
             }
         }
         else{
                 console.log('entre en existe nombre')
-                const adFilterByName = await Ad.findAll({ 
-                include: [{ model: Professional, include: [User] }]})
+                
             
                 if(specialty === 'undefined'){
                     console.log('no tengo especialidad, tengo otro argumento')
@@ -230,7 +230,7 @@ const routefilter=async(req,res,next)=>{
                         newFilter= adFilter.filter(e=> e.specialty===specialty)
                         return res.status(200).send(newFilter)              
                 }
-                const newFilter = adFilter.filter(e=> e.serviceType)   
+                const newFilter = adFilter.filter(e=> e.serviceType===typeService)   
                       console.log('soy el sevicio')
                       return res.status(200).send(newFilter) 
             }
