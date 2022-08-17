@@ -4,11 +4,12 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 
 
-const {routefilter} = require('../Controllers/controllerFilters_copy')
+
 
 
 const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser} = require('../Controllers/controllerAppointments')
-
+const {routefilter} = require('../Controllers/controllerFilters')
+const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
 
@@ -40,6 +41,14 @@ router.get("/ad/:id", getAdById )
 
 //get filter
 router.get('/filter', routefilter)
+
+
+//get countries
+
+router.get('/countries',countries );
+router.get('/states/:countryId', states)
+router.get('/cities/:countryId/:stateId', cities)
+
 
 //get Appointments
 router.get('/appointments', getAppointments )
