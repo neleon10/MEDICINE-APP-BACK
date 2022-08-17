@@ -100,12 +100,10 @@ const getAppointmentsByUser = async(req,res,next)=>{
                 userEmail:userEmail,
             }
     })
-
         res.send(app)
-
-
     }catch(e){
         next(e)
+        res.send("El usuario no cuenta con turnos")
     }
 }
 
