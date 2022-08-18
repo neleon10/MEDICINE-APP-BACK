@@ -1,6 +1,5 @@
 require('dotenv').config();
-const express = require('express')
-const { Sequelize, Op } = require("sequelize");
+
 const  {User , Professional, Ad }= require('../db')
 
 
@@ -9,19 +8,7 @@ const getName = async (req,res,next)=>{
     const {name}= req.query
     console.log(name);
     try {
-        // const responseName = await Ad.findAll({
-        //     include: [{ 
-        //         model: Professional,
-        //         include: [{
-        //             model:User,
-        //             where: {
-        //                     rol: 'professional',
-        //                     name: { [Op.iLike]: `%${name}%` }
-        //                     }
-        //             }]
-        //          }],
-            
-        //   });
+       
         const allAd = await Ad.findAll({ 
             include: [{ model: Professional, include: [User] }]})
 
