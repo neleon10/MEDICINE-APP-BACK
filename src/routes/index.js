@@ -1,5 +1,5 @@
 const { Router } = require('express');
-//const {Ad, Professional, User} = require('../db')
+//const {Appointment} = require('../db')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -7,12 +7,13 @@ const { Router } = require('express');
 
 
 
-const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser} = require('../Controllers/controllerAppointments')
+const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment} = require('../Controllers/controllerAppointments')
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
-
+const {getName}= require('../Controllers/controllerSearch');
+const { route } = require('../app');
 
 
 
@@ -42,6 +43,9 @@ router.get("/ad/:id", getAdById )
 //get filter
 router.get('/filter', routefilter)
 
+//get names
+
+router.get('/ads', getName)
 
 //get countries
 
@@ -103,6 +107,7 @@ router.put('/professional/:MedicalLicense', editProfessional)
 //put appointments
 router.put('/appointments/edit/:AppId', editAppointments)
 
+router.delete('/delete/:id', deleteAppointment)
 
 
 
