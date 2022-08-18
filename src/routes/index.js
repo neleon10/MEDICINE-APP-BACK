@@ -12,7 +12,8 @@ const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
-
+const {getName}= require('../Controllers/controllerSearch');
+const { route } = require('../app');
 
 
 
@@ -42,6 +43,9 @@ router.get("/ad/:id", getAdById )
 //get filter
 router.get('/filter', routefilter)
 
+//get names
+
+router.get('/ads', getName)
 
 //get countries
 
