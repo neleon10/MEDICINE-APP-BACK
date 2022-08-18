@@ -209,7 +209,18 @@ const editAppointments = async (req, res, next) => {
         
 }
 
+const deleteAppointment = async(req,res,next)=>{
+	let {id} = req.params
+    console.log(id)
+	try {
+		await Appointment.destroy({where:{id}})
+		res.send('appointment deleted')		
+	} catch (error) {
+		next(error)
+	}
+}
+
 
 module.exports={createAppointments, getAppointments, getAppointmentsByProfessional,
     getAppointmentsByAdAvailable, getAppointmentsByUser,editAppointments,
-      createCancellAppointmentsByUser,getAppointmentById }
+      createCancellAppointmentsByUser,getAppointmentById, deleteAppointment }
