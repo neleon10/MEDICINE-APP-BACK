@@ -130,9 +130,6 @@ const createUser = async (req, res, next) => {
    else if(country == ""){
     return res.status(404).send("debes indicar un pais de residencia")
    }
-   else if(city == ""){
-    return res.status(404).send("debes indicar una ciudad de residencia")
-   }
    else if(address == ""){
     return res.status(404).send("debes indicar una direccion fisica")
    }
