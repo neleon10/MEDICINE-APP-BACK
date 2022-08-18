@@ -87,7 +87,7 @@ const getAdById = async (req, res, next) => {
     const { id } = req.params;
 
     const ad = await Ad.findByPk(id, {
-      include: [{ model: Professional, include: [User] }],
+      include: [{ model: Professional, include: [User] }, {model:Appointment, where:{adId:id}}],
     });
     if (!ad) return res.status(404).send({ message: "Nope, no ads here!" });
     res.status(200).send(ad);
