@@ -85,10 +85,16 @@ const getDbAd = async (req, res, next) => {
 const getAdById = async (req, res, next) => {
   try {
     const { id } = req.params;
-
-    const ad = await Ad.findByPk(id, {
-      include: [{ model: Professional, include: [User] }, {model:Appointment, where:{adId:id}}],
+    console.log('id', id)
+    let ad = await Ad.findByPk(id, {
+      include: [{ model: Professional, include: [User]}, {model:Appointment, where:{adId:id}}],
     });
+    if(ad === null){
+      ad = await Ad.findByPk(id, {
+        include: [{ model: Professional, include: [User]}, {model:Appointment}],
+      });
+    }
+    console.log('ad', ad)
     if (!ad) return res.status(404).send({ message: "Nope, no ads here!" });
     res.status(200).send(ad);
   } catch (e) {
