@@ -98,6 +98,7 @@ const getAdById = async (req, res, next) => {
 
 //Create a new user (post)
 const createUser = async (req, res, next) => {
+  console.log("llegue aca")
   try {
     let {
       email,
@@ -116,7 +117,31 @@ const createUser = async (req, res, next) => {
       gps,
       favorites,
     } = req.body;
-   
+    console.log(req.body)
+   if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)){
+    return res.status(404).send("el mail no es valido")
+   }
+   else if(password.length <= 6){
+    return res.status(404).send("la contraseña debe tener al menos 7 caracteres")
+   }
+   else if(dateOfBirth == ""){
+    return res.status(404).send("debes indicar una fecha de nacimiento")
+   }
+   else if(country == ""){
+    return res.status(404).send("debes indicar un pais de residencia")
+   }
+   else if(city == ""){
+    return res.status(404).send("debes indicar una ciudad de residencia")
+   }
+   else if(address == ""){
+    return res.status(404).send("debes indicar una direccion fisica")
+   }
+  else if(rol == ""){
+    return res.status(404).send("debes indicar un rol antes de registarte en la app")
+   }
+   else if(!idImage){
+    return res.status(404).send("es necesaria la foto del dni para continuar con el registro")
+   } 
     const userCreated = await User.create({
       email,
       password,
