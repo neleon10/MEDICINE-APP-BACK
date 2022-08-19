@@ -10,16 +10,16 @@ const {
   Ad,
 } = require("../db");
 
-
+//riuta creadora de turnos
 const createAppointments=async(req, res, next)=>{
     try {
         const {hours, dates, professionalMedicalLicense, ad}= req.body
-        
+        console.log('hrs', hours)
         const appointments = await checking(dates,hours,professionalMedicalLicense)
         console.log('soy el ad', ad)
-        //console.log('llegue aca', appointments)
+        console.log('appointments', appointments)
        if(appointments.availableApp.length> 0){
-       // console.log('llegue')
+       
             let apps = appointments.availableApp.map((app)=>{
                 return{
                 startTime:[app.start[3] , app.start[4]],
@@ -45,7 +45,7 @@ const createAppointments=async(req, res, next)=>{
     }
         
 }
-
+//ruta para todos los turnos
 const getAppointments = async(req,res,next)=>{
     try{
         let app = await Appointment.findAll()
@@ -57,10 +57,9 @@ const getAppointments = async(req,res,next)=>{
         next(e)
     }
 }
-
-
+//trae los turnos de cada profesional (se usa en el perfil del medico, para ver los turnos en cada anuncio por separado)
 const getAppointmentsByProfessional = async(req,res,next)=>{
-    const { professionalMedicalLicense} = req.params;
+    const { professionalMedicalLicense, id} = req.params;
     console.log('llegue')
     try{
         
@@ -69,12 +68,13 @@ const getAppointmentsByProfessional = async(req,res,next)=>{
                 professionalMedicalLicense: professionalMedicalLicense,
             }
     })
+
         res.send(app)
     }catch(e){
         next(e)
     }
 }
-
+//trae turnos disponibles
 const getAppointmentsByAdAvailable = async(req,res,next)=>{
     let {adId} = req.params
     try{
@@ -91,7 +91,7 @@ const getAppointmentsByAdAvailable = async(req,res,next)=>{
     }
 }
 
-
+//ruta para traer turnos por usuario
 const getAppointmentsByUser = async(req,res,next)=>{
     let {userEmail} = req.params
     try{
@@ -106,7 +106,7 @@ const getAppointmentsByUser = async(req,res,next)=>{
         res.send("El usuario no cuenta con turnos")
     }
 }
-
+//ruta para traer cada turno individualmente. tiene asociado el anuncio asi sacamos datos de tipo de turno y precio
 const getAppointmentById = async (req,res,next) => {
     let {id} = req.params
     try{
@@ -118,7 +118,19 @@ const getAppointmentById = async (req,res,next) => {
         next(err)
     }
 }
-
+//trae por profesional toda la info de los turnos que tienen (se renderiza en el perfil del medico)
+const traemeTodo = async (req, res, next) => {
+    try {
+      const {medicalLicense} = req.params;
+      const profesional = await Professional.findByPk(medicalLicense,{include:[{model:Appointment, include:[Ad, User]}]})
+      if (!profesional)
+        return res.status(404).send("there's no professionals here! ");
+      else res.status(200).send(profesional);
+    } catch (e) {
+      next(e);
+    }
+  };
+ //funcion que va cambiando los estados de los turnos
 const editAppointments = async (req, res, next) => {
     try {
       let { userEmail, status, medicalRecord, rating } = req.body;
@@ -128,7 +140,7 @@ const editAppointments = async (req, res, next) => {
       if(userEmail && status==='booked' && !medicalRecord && !rating){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: status });
-        res.status(200).send("se ha modificado el status a booked");
+        return res.status(200).send("se ha modificado el status a booked");
       }
  
       //Appointment paid out
@@ -136,43 +148,43 @@ const editAppointments = async (req, res, next) => {
       if(userEmail && status==='pending' && !medicalRecord && !rating){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ userEmail:userEmail, status: status });
-        res.status(200).send("el turno ha sido pagado");
+        return res.status(200).send("el turno ha sido pagado");
       }
       //Appointment paid cancell
       if(userEmail && status==='available' && !medicalRecord && !rating){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: status });
-        res.status(200).send("el turno esta disponible");
+        return res.status(200).send("el turno esta disponible");
       }
       //Appointment completed
       if(!status && medicalRecord && !rating){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: 'completed', medicalRecord: medicalRecord});
-        res.status(200).send("se ha modificado el status a completado");
+        return res.status(200).send("se ha modificado el status a completado");
         //entra useEffect cdo usuario entra a su perfil, que va a tener un condicional que si el status de su turnos es completed y rating===null dispara un modal para calificar ese turno
       }
       //user complet rating
       if(userEmail && !status && !medicalRecord && rating){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ rating: rating });
-        res.status(200).send("se ha modificado el raiting");
+        return res.status(200).send("se ha modificado el raiting");
       }
       // user absent
       if(status=== 'absent'){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: status });
-        res.status(200).send("se ha modificado el status a ausente");
+        return res.status(200).send("se ha modificado el status a ausente");
       }
       
       if(userEmail && status=== 'cancelled'){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: status });
-        res.status(200).send("el usuario ha cancelado el turno");
+        return res.status(200).send("el usuario ha cancelado el turno");
       }
       if(status=== 'cancelled'){
         const app = await Appointment.findByPk(AppId);
         await app?.update({ status: status });
-        res.status(200).send("el usuario ha cancelado el turno");
+        return res.status(200).send("el usuario ha cancelado el turno");
       }
       
       
@@ -180,35 +192,42 @@ const editAppointments = async (req, res, next) => {
       next(e)
   };
   }
-
+//funcion que cancela un turno y lo vuelve a crear para que vuelva a estar disponibe
   const createCancellAppointmentsByUser=async(req, res, next)=>{
-    try {
-        const {hours, dates, professionalMedicalLicense, ad}= req.body
+    try {    
         const {idApp}=req.params
-        const appointments = await findByPk(idApp)
-       
-            let apps ={ 
-              
-                startTime:appointments.startTime,
-                endTime: appointments.endTime ,
-                date: appointments.date,
-                status: 'available',
-                professionalMedicalLicense: professionalMedicalLicense,
-                adId: ad 
-      
-                }
-               await Appointment.Create(apps);  
+        console.log('idaaaa',idApp)
+        if(idApp){
+
+            const appointments = await Appointment.findByPk(idApp)
     
-               res.status(200).send(appointments); 
-       
-         res.status(418).send({ message: 'these were not created' });
-       
+            console.log('appsssss', appointments.dataValues)
+           
+                let apps ={ 
+                  
+                    startTime:appointments.dataValues.startTime,
+                    endTime: appointments.dataValues.endTime ,
+                    date: appointments.dataValues.date,
+                    status: 'available',
+                    professionalMedicalLicense: appointments.dataValues.professionalMedicalLicense,
+                    adId: appointments.dataValues.adId
+          
+                    }
+                    
+                   await Appointment.create(apps);  
+        
+                return  res.status(200).send('se creo'); 
+        }else{
+
+            res.status(418).send({ message: 'these were not created' });
+        }
+        
     } catch (error) {
         next (error)
     }
         
 }
-
+//funcion para que el medico pueda eliminar un turno creado por el
 const deleteAppointment = async(req,res,next)=>{
 	let {id} = req.params
     console.log(id)
@@ -223,4 +242,4 @@ const deleteAppointment = async(req,res,next)=>{
 
 module.exports={createAppointments, getAppointments, getAppointmentsByProfessional,
     getAppointmentsByAdAvailable, getAppointmentsByUser,editAppointments,
-      createCancellAppointmentsByUser,getAppointmentById, deleteAppointment }
+      createCancellAppointmentsByUser,getAppointmentById, deleteAppointment, traemeTodo }

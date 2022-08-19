@@ -7,7 +7,7 @@ const { Router } = require('express');
 
 
 
-const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment} = require('../Controllers/controllerAppointments')
+const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment, traemeTodo} = require('../Controllers/controllerAppointments')
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
@@ -35,7 +35,7 @@ router.get("/professionals/:id", getProfessionalById)
 
 
 //get Ad 
-router.get('/ads',getDbAd)
+router.get('/anuncios',getDbAd)
 
 router.get("/ad/:id", getAdById )
 
@@ -66,6 +66,7 @@ router.get('/appointments/ad/:adId', getAppointmentsByAdAvailable)
 router.get('/appointments/id/:id' , getAppointmentById)
 
 router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
+router.get('/appointments/all/:medicalLicense', traemeTodo)
 // ******** POSTS ***********//
 
 // Create a new User. 
@@ -83,7 +84,7 @@ router.post('/ad', createAds)
 
 //createAppointment
 router.post('/appointment', createAppointments)
-router.post('/appointment/cancelled', createCancellAppointmentsByUser)
+router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
 
 
 //recover user by mail and password
@@ -107,7 +108,7 @@ router.put('/professional/:MedicalLicense', editProfessional)
 //put appointments
 router.put('/appointments/edit/:AppId', editAppointments)
 
-router.delete('/delete/:id', deleteAppointment)
+router.delete('/delete/appointment/:id', deleteAppointment)
 
 
 
