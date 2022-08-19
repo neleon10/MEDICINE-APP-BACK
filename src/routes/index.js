@@ -13,7 +13,7 @@ const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
-const { route } = require('../app');
+
 
 
 
