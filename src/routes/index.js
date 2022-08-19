@@ -35,7 +35,7 @@ router.get("/professionals/:id", getProfessionalById)
 
 
 //get Ad 
-router.get('/ads',getDbAd)
+router.get('/anuncios',getDbAd)
 
 router.get("/ad/:id", getAdById )
 
@@ -83,7 +83,7 @@ router.post('/ad', createAds)
 
 //createAppointment
 router.post('/appointment', createAppointments)
-router.post('/appointment/cancelled', createCancellAppointmentsByUser)
+router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
 
 
 //recover user by mail and password
@@ -107,7 +107,7 @@ router.put('/professional/:MedicalLicense', editProfessional)
 //put appointments
 router.put('/appointments/edit/:AppId', editAppointments)
 
-router.delete('/delete/:id', deleteAppointment)
+router.delete('/delete/appointment/:id', deleteAppointment)
 
 
 
