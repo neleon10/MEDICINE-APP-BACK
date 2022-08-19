@@ -11,7 +11,7 @@ const {createAppointments, getAppointments, getAppointmentsByProfessional, getAp
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
-const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail }  = require ('../Controllers/getPostControllers')
+const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail, deleteUserByAdmin, forgivenByAdmin }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
 const { route } = require('../app');
 
@@ -111,7 +111,10 @@ router.delete('/delete/:id', deleteAppointment)
 
 
 
+router.put('/Admindelete/:id',deleteUserByAdmin)
 
+
+router.put('/Adminforgive/:email',forgivenByAdmin)
 
 
 module.exports = router;
