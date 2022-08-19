@@ -7,13 +7,19 @@ let City = require('country-state-city').City;
 
 
 const countries=async(req, res, next)=>{
-  let countries= Country.getAllCountries() 
- let todoslospaises= countries.map(e=>{
-    return{
-    countryId: e.isoCode,
-   name : e.name}
-  })
-  res.status(200).send(todoslospaises)
+  try {
+    let countries= Country.getAllCountries() 
+   let todoslospaises= countries.map(e=>{
+      return{
+      countryId: e.isoCode,
+     name : e.name}
+    })
+    console.log('aaaahhh',todoslospaises)
+    res.status(200).send(todoslospaises)
+    
+  } catch (error) {
+    next(error)
+  }
 }
 const states=(req,res,next)=>{
   let {countryId}= req.params;
