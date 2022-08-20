@@ -37,6 +37,7 @@ router.get('/professionals', getPro)
 router.get("/professionals/:id", getProfessionalById)
 
 
+
 //get Ad 
 router.get('/anuncios',getDbAd)
 

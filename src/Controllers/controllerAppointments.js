@@ -241,6 +241,7 @@ const deleteAppointment = async(req,res,next)=>{
 
 const createHours = async(req, res, next)=>{
     try {
+        
         let {startTime, endTime, duration}=req.body
         console.log('la action entro al back con estos datos==>', req.body);
 
