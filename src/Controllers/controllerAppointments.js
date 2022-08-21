@@ -95,11 +95,7 @@ const getAppointmentsByAdAvailable = async(req,res,next)=>{
 const getAppointmentsByUser = async(req,res,next)=>{
     let {userEmail} = req.params
     try{
-        let app = await Appointment.findAll({
-            where:{
-                userEmail:userEmail,
-            }
-    })
+        let app = await User.findByPk(userEmail,{include:[{model:Appointment, include:[Ad, Professional]}]})
         res.send(app)
     }catch(e){
         next(e)
