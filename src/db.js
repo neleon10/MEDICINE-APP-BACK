@@ -11,6 +11,7 @@ const sequelize = new Sequelize(DATABASE_URL, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false,// lets Sequelize know we can use pg-native for ~30% more speed
 
+
   //extra configuration for heroku
   dialectOptions:{
     ssl:{
@@ -18,6 +19,7 @@ const sequelize = new Sequelize(DATABASE_URL, {
       rejectUnauthorized:false
     }
   },
+
 });
 const basename = path.basename(__filename);
 
