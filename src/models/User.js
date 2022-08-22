@@ -74,10 +74,13 @@ module.exports = (sequelize) => {
         active:{
             type:DataTypes.BOOLEAN,
             defaultValue:true
+        },
+        deletedByAdmin:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:false
         }
     }, {
         freezeTableName: true,
-        timestamps:false,
     }
     );
 };

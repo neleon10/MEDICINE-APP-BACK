@@ -279,27 +279,11 @@ const editUser = async (req, res, next) => {
       rol,
       gps,
       favorites,
+      deletedByAdmin,
     } = req.body;
 
     let { idUser } = req.params;
-    /* console.log({
-      password,
-      name,
-      dateOfBirth,
-      identification,
-      userimage,
-      idImage,
-      country,
-      city,
-      address,
-      province,
-      phone,
-      rol,
-      gps,
-      favorites,
-    }); */
-    /* console.log("llegué acá"); */
-    /* console.log(idUser); */
+
     const user = await User.findByPk(idUser);
     await user?.update({
       password,
@@ -316,6 +300,7 @@ const editUser = async (req, res, next) => {
       rol,
       gps,
       favorites,
+      deletedByAdmin
     });
     res.status(200).send("se actualizo la info del usuario");
   } catch (e) {
@@ -406,6 +391,72 @@ const deleteUserById = async (req, res, next) => {
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const deleteUserByAdmin = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const userDeletedByAdmin = await User.update( 
+    {
+      deletedByAdmin: true,
+    },
+    {
+      where: { id },
+    }
+  );
+    if (!userDeletedByAdmin.deletedByAdmin)
+      return res
+        .status(404)
+        .send({ message: "No pudimos eliminar el usuario" });
+    else res.status(200).send({ message: "Registro borrado con exito" });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const forgivenByAdmin = async (req, res, next) => {
+  const { email } = req.params;
+  console.log("soy el email", email)
+  try {
+    const userRecovered = await User.update(
+      {
+        deletedByAdmin: false,
+      },
+      {
+      where: {
+        email: email
+      },
+   });
+
+    if (userRecovered.deletedByUser)
+      return res
+        .status(418)
+        .send({ message: "No pudimos recuperar el usuario" });
+    else res.status(200).send({ message: "Usuario  recuperado con exito" });
+  } catch (e) {
+    next(e);
+  }
+};
+
+
+
+
+
+
 module.exports = {
   getAllUsers,
   getPro,
@@ -423,4 +474,7 @@ module.exports = {
   editAd,
   deleteUserById,
   recoverBymail,
+  deleteUserByAdmin,
+  forgivenByAdmin
 };
+
