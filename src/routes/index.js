@@ -47,12 +47,6 @@ router.get("/ad/:id", getAdById);
 
 
 
-//get Ad 
-router.get('/anuncios',getDbAd)
-
-
-
-
 //get filter
 router.get("/filter", routefilter);
 
