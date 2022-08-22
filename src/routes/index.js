@@ -19,8 +19,10 @@ const {getName}= require('../Controllers/controllerSearch');
 const {getFilterUsers}= require('../Controllers/controllerFiltersAdmin')
 
 
+
  
 
+ 
 
 
 const router = Router();
@@ -40,7 +42,13 @@ router.get("/professionals/:id", getProfessionalById);
 router.get("/anuncios", getDbAd);
 
 
+
 router.get("/ad/:id", getAdById);
+
+
+
+//get Ad 
+router.get('/anuncios',getDbAd)
 
 
 
@@ -77,8 +85,10 @@ router.get("/appointments/id/:id", getAppointmentById);
 router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
 router.get('/appointments/all/:medicalLicense', traemeTodo)
 
+
 //*******ADMIN ROUTES */
 router.get('/filterAdmin', getFilterUsers)
+
 
 // ******** POSTS ***********//
 
@@ -100,6 +110,8 @@ router.post("/ad", createAds);
 router.post('/appointment', createAppointments)
 router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
 router.post('/appointment/hours', createHours)
+
+
 
 
 //recover user by mail and password
@@ -131,8 +143,12 @@ router.delete('/delete/appointment/:id', deleteAppointment)
 router.put('/Admindelete/:id',deleteUserByAdmin)
 
 
+
 router.put('/Adminforgive/:email',forgivenByAdmin)
 
+
+
+router.put('/Adminforgive/:email',forgivenByAdmin)
 
 
 module.exports = router;
