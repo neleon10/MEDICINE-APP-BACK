@@ -16,7 +16,7 @@ const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail, deleteUserByAdmin, forgivenByAdmin }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
-const {getFilterUsers}= require('../Controllers/controllerFiltersAdmin')
+const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
 
 
 
@@ -140,6 +140,12 @@ router.put('/Admindelete/:id',deleteUserByAdmin)
 
 router.put('/Adminforgive/:email',forgivenByAdmin)
 
+
+router.put('/adminDesigne/:id',designeAdmin)
+
+
+
+router.put('/adminDegrede/:id',degredeAdmin)
 
 
 module.exports = router;
