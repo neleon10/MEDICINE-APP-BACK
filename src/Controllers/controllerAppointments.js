@@ -95,11 +95,7 @@ const getAppointmentsByAdAvailable = async(req,res,next)=>{
 const getAppointmentsByUser = async(req,res,next)=>{
     let {userEmail} = req.params
     try{
-        let app = await Appointment.findAll({
-            where:{
-                userEmail:userEmail,
-            }
-    })
+        let app = await Appointment.findAll({where:{userEmail:userEmail},include:User})
         res.send(app)
     }catch(e){
         next(e)
@@ -110,7 +106,7 @@ const getAppointmentsByUser = async(req,res,next)=>{
 const getAppointmentById = async (req,res,next) => {
     let {id} = req.params
     try{
-        const appoinment = await Appointment.findByPk(id, { include: Ad });
+        const appoinment = await Appointment.findByPk(id, { include: [Ad, User, { model: Professional, include: [User] } ]});
         if (!appoinment)
           return res.status(404).send("there's no professionals here! ");
         else res.status(200).send(appoinment);
@@ -218,14 +214,11 @@ const editAppointments = async (req, res, next) => {
         
                 return  res.status(200).send('se creo'); 
         }else{
-
             res.status(418).send({ message: 'these were not created' });
-        }
-        
+        }        
     } catch (error) {
         next (error)
-    }
-        
+    }       
 }
 //funcion para que el medico pueda eliminar un turno creado por el
 const deleteAppointment = async(req,res,next)=>{
@@ -238,6 +231,8 @@ const deleteAppointment = async(req,res,next)=>{
 		next(error)
 	}
 }
+
+
 
 const createHours = async(req, res, next)=>{
     try {
