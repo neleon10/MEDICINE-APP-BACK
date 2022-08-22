@@ -142,7 +142,4 @@ router.put('/Adminforgive/:email',forgivenByAdmin)
 
 
 
-router.put('/Adminforgive/:email',forgivenByAdmin)
-
-
 module.exports = router;
