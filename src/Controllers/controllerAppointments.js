@@ -64,10 +64,7 @@ const getAppointmentsByProfessional = async(req,res,next)=>{
     try{
         
         let app = await Appointment.findAll({
-            where:{
-                professionalMedicalLicense: professionalMedicalLicense,
-            }
-    })
+            where:{professionalMedicalLicense: professionalMedicalLicense}, include:[Ad]})
 
         res.send(app)
     }catch(e){
@@ -95,7 +92,7 @@ const getAppointmentsByAdAvailable = async(req,res,next)=>{
 const getAppointmentsByUser = async(req,res,next)=>{
     let {userEmail} = req.params
     try{
-        let app = await Appointment.findAll({where:{userEmail:userEmail},include:User})
+        let app = await Appointment.findAll({where:{userEmail:userEmail},include:[User, Ad, { model: Professional, include: [User] }] })
         res.send(app)
     }catch(e){
         next(e)
