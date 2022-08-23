@@ -4,12 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "nodemon -L",
-=======
-
-    "start": "node .",
->>>>>>> da52db6ed2662a94dc59133198ccd616f3d1ac58
     "dev": "nodemon index.js",
 
     "test": "mocha -w ./tests/**/*.spec.js"
