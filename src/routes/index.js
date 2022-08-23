@@ -4,13 +4,10 @@ const { Router } = require("express");
 // Ejemplo: const authRouter = require('./auth.js');
 
 
-
-
-
-
-
 const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment, traemeTodo,createHours} = require('../Controllers/controllerAppointments')
+
 const {getGraficProffesionalById}= require('../Controllers/graficProffesional')
+
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
@@ -18,11 +15,6 @@ const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, get
 const {getName}= require('../Controllers/controllerSearch');
 const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
 
-
-
- 
-
- 
 
 
 const router = Router();
@@ -47,6 +39,8 @@ router.get("/ad/:id", getAdById);
 
 
 
+router.get("/ad/:id", getAdById);
+
 //get filter
 router.get("/filter", routefilter);
 
@@ -70,6 +64,7 @@ router.get(
 );
 
 //get AppointmentsByAd
+
 router.get("/appointments/ad/:adId", getAppointmentsByAdAvailable);
 
 
@@ -86,6 +81,7 @@ router.get('/grafic/:medicalLicense', getGraficProffesionalById)
 
 //*******ADMIN ROUTES */
 router.get('/filterAdmin', getFilterUsers)
+
 
 
 // ******** POSTS ***********//
@@ -111,7 +107,6 @@ router.post('/appointment/hours', createHours)
 
 
 
-
 //recover user by mail and password
 router.put("/restore", recoverBymail);
 
@@ -132,24 +127,20 @@ router.put("/professional/:MedicalLicense", editProfessional);
 
 //put appointments
 
+
 router.put('/appointments/edit/:AppId', editAppointments)
 
+
+router.put('/appointments/edit/:AppId', editAppointments)
 router.delete('/delete/appointment/:id', deleteAppointment)
-
-
-
 router.put('/Admindelete/:id',deleteUserByAdmin)
 
-
-
 router.put('/Adminforgive/:email',forgivenByAdmin)
+router.delete("/delete/appointment/:id", deleteAppointment);
 
 
 router.put('/adminDesigne/:id',designeAdmin)
 
-
-
 router.put('/adminDegrede/:id',degredeAdmin)
-
 
 module.exports = router;
