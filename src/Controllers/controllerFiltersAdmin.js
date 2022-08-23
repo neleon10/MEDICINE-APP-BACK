@@ -41,6 +41,7 @@ const getFilterUsers = async (req, res, next) => {
     const allUsersUsers = allUsers.filter((user) => user.rol === "user");
     const allProfessionals = allUsers.filter((user) => user.rol === "user");
 
+
     
 //****** respuestas segun query ******/ 
 
@@ -111,6 +112,7 @@ const getFilterUsers = async (req, res, next) => {
 
     if (ranking && ranking !== "undefined") {
       //devuelve los profesionales ordenados por mayor ranking
+
       if (ranking === "mejores") {
         res.status(200).send(bestProffesional);
       } else {
@@ -162,6 +164,61 @@ const getFilterUsers = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = {
-  getFilterUsers,
+
+
+
+
+
+
+const designeAdmin = async (req, res, next) => {
+  const { id } = req.params;
+  console.log (id)
+  try {
+    const userDesigneAdmin = await User.update( 
+    {
+      rol: "admin",
+    },
+    {
+      where: { id },
+    }
+  );
+    if (userDesigneAdmin.rol !== "admin")
+      return res
+        .status(404)
+        .send({ message: "No pudimos pasar a admin a este usuario" });
+    else res.status(200).send({ message: "usuario pasado a admin con exito" });
+  } catch (e) {
+    next(e);
+  }
 };
+
+
+const degredeAdmin = async (req, res, next) => {
+  const { id } = req.params;
+  console.log (id)
+  try {
+    const userdegredeAdmin = await User.update( 
+    {
+      rol: "usuario"
+    },
+    {
+      where: { id },
+    }
+  );
+    if (userdegredeAdmin.rol !== "usuario")
+      return res
+        .status(404)
+        .send({ message: "No pudimos pasar a usuario a este admin" });
+    else res.status(200).send({ message: "ya no es admin" });
+  } catch (e) {
+    next(e);
+  }
+};
+
+
+
+module.exports={
+  getFilterUsers,
+  designeAdmin,
+  degredeAdmin
+}

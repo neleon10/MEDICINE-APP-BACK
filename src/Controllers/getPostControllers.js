@@ -300,7 +300,7 @@ const editUser = async (req, res, next) => {
       rol,
       gps,
       favorites,
-      deletedByAdmin
+      deletedByAdmin,
     });
     res.status(200).send("se actualizo la info del usuario");
   } catch (e) {
@@ -409,6 +409,7 @@ const deleteUserById = async (req, res, next) => {
 
 const deleteUserByAdmin = async (req, res, next) => {
   const { id } = req.params;
+  console.log (id)
   try {
     const userDeletedByAdmin = await User.update( 
     {
