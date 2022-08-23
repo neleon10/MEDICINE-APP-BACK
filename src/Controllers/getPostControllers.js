@@ -223,6 +223,41 @@ const createAds = async (req, res, next) => {
 };
 
 //favorites
+const createComments = async (req,res,next) => {
+
+  try{
+    let{comments , rating,userEmail} = req.body;
+
+    const commentCreate = await Comments.create({
+      comments,
+      rating,
+      userEmail
+    })
+    if (!commentCreate){
+    res.status(418).send({ message: "Oops the comment was not created" })};
+  res.status(200).send("Comments created successfully");
+
+
+  }catch(err){
+    next(err)
+  }
+}
+
+const getComments = async (req,res,next) =>{
+  try{
+    const allComents = await Comments.findAll(
+      {
+        model: [User]
+       
+    });
+    if (allComents.length === 0)
+      return res.status(404).send({ message: "Advertisment not found" });
+    res.status(200).send(allComents);
+
+  }catch(err){
+  next(err)
+}
+}
 
 const addFavorites = async (req, res, next) => {
   try {
@@ -406,6 +441,8 @@ const deleteUserById = async (req, res, next) => {
 };
 
 
+
+
 module.exports = {
   getAllUsers,
   getPro,
@@ -423,4 +460,6 @@ module.exports = {
   editAd,
   deleteUserById,
   recoverBymail,
+  createComments,
+  getComments
 };
