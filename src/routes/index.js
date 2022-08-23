@@ -10,7 +10,7 @@ const { Router } = require("express");
 
 
 const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment, traemeTodo,createHours} = require('../Controllers/controllerAppointments')
-
+const {getGraficProffesionalById}= require('../Controllers/graficProffesional')
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
@@ -78,6 +78,10 @@ router.get("/appointments/id/:id", getAppointmentById);
 
 router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
 router.get('/appointments/all/:medicalLicense', traemeTodo)
+
+//get proffesional grafic by medical license
+router.get('/grafic/:medicalLicense', getGraficProffesionalById)
+
 
 
 //*******ADMIN ROUTES */

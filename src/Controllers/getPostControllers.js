@@ -312,10 +312,10 @@ const editUser = async (req, res, next) => {
 //edit professional
 const editProfessional = async (req, res, next) => {
   try {
-    let { aboutMe, college } = req.body;
+    let { aboutMe, college, ranking } = req.body;
     let { MedicalLicense } = req.params;
     const professional = await Professional.findByPk(MedicalLicense);
-    await professional?.update({ aboutMe, college });
+    await professional?.update({ aboutMe, college, ranking });
     res.status(200).send("se a modificado la informacion del profesional");
   } catch (e) {
     next(e);
