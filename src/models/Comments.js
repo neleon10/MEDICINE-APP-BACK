@@ -6,12 +6,16 @@ module.exports = (sequelize) => {
   sequelize.define('comments', {
     id: {
       primaryKey: true,
-      type: DataTypes.STRING,
-      allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV1,
+        allowNull: false,
     },
     comments:{
         type: DataTypes.TEXT
-    } 
+    },
+    rating:{
+      type:DataTypes.STRING
+    }
   },{
     freezeTableName: true,
     timestamps: false

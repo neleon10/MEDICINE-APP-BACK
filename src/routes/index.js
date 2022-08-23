@@ -14,7 +14,7 @@ const {getGraficProffesionalById}= require('../Controllers/graficProffesional')
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
-const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail, deleteUserByAdmin, forgivenByAdmin }  = require ('../Controllers/getPostControllers')
+const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail , deleteUserByAdmin, forgivenByAdmin ,createComments,getComments }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
 const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
 
@@ -77,7 +77,11 @@ router.get("/appointments/id/:id", getAppointmentById);
 
 
 router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
+
 router.get('/appointments/all/:medicalLicense', traemeTodo)
+
+router.get('/comments/all' , getComments)
+
 
 //get proffesional grafic by medical license
 router.get('/grafic/:medicalLicense', getGraficProffesionalById)
@@ -110,6 +114,8 @@ router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
 router.post('/appointment/hours', createHours)
 
 
+
+router.post('/comments/user' , createComments)
 
 
 //recover user by mail and password

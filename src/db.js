@@ -54,8 +54,8 @@ User.hasOne(Medicalrecord)
 Medicalrecord.belongsTo(User)
 
 //Un profesional puede tener muchos comentarios pero todos esos comentarios pertencen a un solo profesional 
-Professional.hasMany(Comments)
-Comments.belongsTo(Professional)
+User.hasOne(Comments)
+Comments.belongsTo(User)
 
 //podemos hacer que copincidan los id en turno y medical record para hacer coindir el usuario :*
 Ad.hasMany(Appointment)
