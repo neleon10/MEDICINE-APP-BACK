@@ -48,6 +48,7 @@ const getFilterUsers = async (req, res, next) => {
 //****APPOINTMENTS */
     if (appointment && appointment !== "undefined") {
       if(appointment==="users"){
+        console.log("entre aca")
 
         const usersAppointmentsCompleted = allUsersUsers.filter((user) =>
           user.appointments?.map(
@@ -114,8 +115,10 @@ const getFilterUsers = async (req, res, next) => {
       //devuelve los profesionales ordenados por mayor ranking
 
       if (ranking === "mejores") {
+        console.log("entre en mejores")
         res.status(200).send(bestProffesional);
       } else {
+        console.log("entre en peores")
         res.status(200).send(worseProfessionals);
       }
     }
@@ -132,11 +135,13 @@ const getFilterUsers = async (req, res, next) => {
 
     if (active && active !== "undefined") {
       if (active === "yes") {
-        allUsers.filter((user) => user.active === true);
-        res.status(200).send(allUsers);
+        console.log("entre en activos")
+        const activeUsers = allUsers.filter((user) => user.active === true);
+        res.status(200).send(activeUsers);
       } else {
-        allUsers.filter((user) => user.active === false);
-        res.status(200).send(allUsers);
+        console.log("entre en inactivos")
+        const inactiveUsers = allUsers.filter((user) => user.active === false);
+        res.status(200).send(inactiveUsers);
       }
     }
 
