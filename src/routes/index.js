@@ -5,14 +5,14 @@ const { Router } = require("express");
 
 
 const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment, traemeTodo,createHours} = require('../Controllers/controllerAppointments')
-
+const {getGraficProffesionalById}= require('../Controllers/graficProffesional')
 
 const {routefilter} = require('../Controllers/controllerFilters')
 const {countries, states, cities}= require('../Controllers/countries')
 const { PaymentRoute } = require('../Controllers/controllerStripePay')
-const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail, deleteUserByAdmin, forgivenByAdmin }  = require ('../Controllers/getPostControllers')
+const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail , deleteUserByAdmin, forgivenByAdmin ,createComments,getComments }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
-
+const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
 const router = Router();
 
 //get users
@@ -26,12 +26,13 @@ router.get("/professionals", getPro);
 
 router.get("/professionals/:id", getProfessionalById);
 
+//get Ad
+router.get("/anuncios", getDbAd);
 
 
-//get Ad 
-router.get('/anuncios',getDbAd)
 
-router.get("/ad/:id", getAdById )
+router.get("/ad/:id", getAdById);
+
 
 
 router.get("/ad/:id", getAdById);
@@ -61,7 +62,27 @@ router.get(
 //get AppointmentsByAd
 
 router.get("/appointments/ad/:adId", getAppointmentsByAdAvailable);
+
+
 router.get("/appointments/id/:id", getAppointmentById);
+
+
+router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
+
+router.get('/appointments/all/:medicalLicense', traemeTodo)
+
+router.get('/comments/all' , getComments)
+
+
+//get proffesional grafic by medical license
+router.get('/grafic/:medicalLicense', getGraficProffesionalById)
+
+
+
+//*******ADMIN ROUTES */
+router.get('/filterAdmin', getFilterUsers)
+
+
 
 // ******** POSTS ***********//
 
@@ -83,7 +104,7 @@ router.post("/ad", createAds);
 router.post('/appointment', createAppointments)
 router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
 router.post('/appointment/hours', createHours)
-
+router.post('/comments/user' , createComments)
 
 //recover user by mail and password
 router.put("/restore", recoverBymail);
@@ -106,9 +127,16 @@ router.put("/professional/:MedicalLicense", editProfessional);
 //put appointments
 
 router.put('/appointments/edit/:AppId', editAppointments)
+
+
+router.put('/appointments/edit/:AppId', editAppointments)
 router.delete('/delete/appointment/:id', deleteAppointment)
 router.put('/Admindelete/:id',deleteUserByAdmin)
+
 router.put('/Adminforgive/:email',forgivenByAdmin)
 router.delete("/delete/appointment/:id", deleteAppointment);
 
+
+router.put('/adminDesigne/:id',designeAdmin)
+router.put('/adminDegrede/:id',degredeAdmin)
 module.exports = router;

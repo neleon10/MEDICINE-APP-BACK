@@ -223,6 +223,41 @@ const createAds = async (req, res, next) => {
 };
 
 //favorites
+const createComments = async (req,res,next) => {
+
+  try{
+    let{comments , rating,userEmail} = req.body;
+
+    const commentCreate = await Comments.create({
+      comments,
+      rating,
+      userEmail
+    })
+    if (!commentCreate){
+    res.status(418).send({ message: "Oops the comment was not created" })};
+  res.status(200).send("Comments created successfully");
+
+
+  }catch(err){
+    next(err)
+  }
+}
+
+const getComments = async (req,res,next) =>{
+  try{
+    const allComents = await Comments.findAll(
+      {
+        model: [User]
+       
+    });
+    if (allComents.length === 0)
+      return res.status(404).send({ message: "Advertisment not found" });
+    res.status(200).send(allComents);
+
+  }catch(err){
+  next(err)
+}
+}
 
 const addFavorites = async (req, res, next) => {
   try {
@@ -300,7 +335,7 @@ const editUser = async (req, res, next) => {
       rol,
       gps,
       favorites,
-      deletedByAdmin
+      deletedByAdmin,
     });
     res.status(200).send("se actualizo la info del usuario");
   } catch (e) {
@@ -312,10 +347,10 @@ const editUser = async (req, res, next) => {
 //edit professional
 const editProfessional = async (req, res, next) => {
   try {
-    let { aboutMe, college } = req.body;
+    let { aboutMe, college, ranking } = req.body;
     let { MedicalLicense } = req.params;
     const professional = await Professional.findByPk(MedicalLicense);
-    await professional?.update({ aboutMe, college });
+    await professional?.update({ aboutMe, college, ranking });
     res.status(200).send("se a modificado la informacion del profesional");
   } catch (e) {
     next(e);
@@ -394,21 +429,9 @@ const deleteUserById = async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 const deleteUserByAdmin = async (req, res, next) => {
   const { id } = req.params;
+  console.log (id)
   try {
     const userDeletedByAdmin = await User.update( 
     {
@@ -456,7 +479,6 @@ const forgivenByAdmin = async (req, res, next) => {
 
 
 
-
 module.exports = {
   getAllUsers,
   getPro,
@@ -474,6 +496,8 @@ module.exports = {
   editAd,
   deleteUserById,
   recoverBymail,
+  createComments,
+  getComments,
   deleteUserByAdmin,
   forgivenByAdmin
 };
