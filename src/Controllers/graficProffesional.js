@@ -10,7 +10,7 @@ const getGraficProffesionalById= async (req, res, next)=>{
     const{medicalLicense}= req.params;
 
     const allAppointments = await Appointment.findAll({
-        where: { status: "completed", professionalMedicalLicense: medicalLicense },
+        where: { status: "pending", professionalMedicalLicense: medicalLicense },
         include: [Ad],
       });
       let infroGraf=[]
