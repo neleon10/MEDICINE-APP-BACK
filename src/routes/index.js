@@ -13,6 +13,9 @@ const { PaymentRoute } = require('../Controllers/controllerStripePay')
 const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail , deleteUserByAdmin, forgivenByAdmin ,createComments,getComments }  = require ('../Controllers/getPostControllers')
 const {getName}= require('../Controllers/controllerSearch');
 const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
+
+const {getSpecialtys, postSpecialty}= require('../Controllers/controllerSpecialty')
+
 const router = Router();
 
 //get users
@@ -139,4 +142,12 @@ router.delete("/delete/appointment/:id", deleteAppointment);
 
 router.put('/adminDesigne/:id',designeAdmin)
 router.put('/adminDegrede/:id',degredeAdmin)
+
+
+router.get("/specialtys", getSpecialtys);
+
+router.post("/specialty", postSpecialty);
+
+
+
 module.exports = router;
