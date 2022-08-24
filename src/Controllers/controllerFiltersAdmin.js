@@ -39,7 +39,7 @@ const getFilterUsers = async (req, res, next) => {
       where: { rol: "professional" },
     });
     const allUsersUsers = allUsers.filter((user) => user.rol === "user");
-    const allProfessionals = allUsers.filter((user) => user.rol === "user");
+    const allProfessionals = allUsers.filter((user) => user.rol === "professional");
 
 
     
@@ -78,31 +78,31 @@ const getFilterUsers = async (req, res, next) => {
         })
         res.status(200).send(infoUsers);
       
-      // }else{
-      //   const professionalAppointmentsCompleted = allUsersUsers.filter((user) =>
-      //     user.appointments?.map(
-      //       (appointment) => appointment.status === "pending"
-      //     )
-      //   );
-      //   let infoProfessionals = [];
+      }else{
+        const professionalAppointmentsCompleted = allProfessionals.filter((user) =>
+          user.appointments?.map(
+            (appointment) => appointment.status === "pending"
+          )
+        );
+        let infoProfessionals = [];
   
-      //   professionalAppointmentsCompleted.forEach((user) => {
-      //     let a = {};
-      //     a["userEmail"] = user.email;
-      //     a["userEmail"] = user.name;
-      //     //a["medicalLicense"]=user.professional.medicalLicense
-      //     a["totalAppointments"] = user.appointments.length;
-      //     a["totalPricesAppointments"] = 0;
-      //     a["active"] = user.active;
+        professionalAppointmentsCompleted.forEach((user) => {
+          let a = {};
+          a["userEmail"] = user.email;
+          a["name"] = user.name;
+          //a["medicalLicense"]=user.professional.medicalLicense
+          a["totalAppointments"] = user.appointments.length;
+          a["totalPricesAppointments"] = 0;
+          a["active"] = user.active;
   
-      //     user.appointments.map((ap) => {
-      //       console.log(ap.ad.price);
-      //       a.totalPricesAppointments += parseInt(ap.ad.price);
-      //     });
+          user.appointments.map((ap) => {
+            console.log(ap.ad.price);
+            a.totalPricesAppointments += parseInt(ap.ad.price);
+          });
   
-      //     infoProfessionals.push(a);
-      //   });
-      //   res.status(200).send(professionalAppointmentsCompleted);
+          infoProfessionals.push(a);
+        });
+        res.status(200).send(infoProfessionals);
 
       }
     }
