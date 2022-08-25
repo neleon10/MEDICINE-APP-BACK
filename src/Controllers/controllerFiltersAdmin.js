@@ -82,7 +82,7 @@ const getFilterUsers = async (req, res, next) => {
       }else{
         const professionalAppointmentsCompleted = allProfessionals.filter((user) =>
           user.appointments?.map(
-            (appointment) => appointment.status === "pending"
+            (appointment) => appointment.status === "completed"
           )
         );
         let infoProfessionals = [];
