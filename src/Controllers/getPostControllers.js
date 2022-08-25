@@ -102,6 +102,32 @@ const getAdById = async (req, res, next) => {
     next(e);
   }
 };
+//******FAVORITOS */
+const getFavorites = async (req, res, next) => {
+  try {
+    const {favorites } = req.body;
+    console.log(favorites, 'soy los favoritos')
+    //console.log('id', id)
+    
+    const allAdsFavorites= [];
+    for(const e of favorites){
+      const prof = await Ad.findAll({
+        include: [{ model: Professional, include: [User], where:{medicalLicense:e}}],
+      });
+      allAdsFavorites.push(prof)
+    }
+     
+   
+      console.log(allAdsFavorites, 'soy ads')
+      res.status(200).send(allAdsFavorites);
+      
+   
+  } catch (e) {
+    next(e);
+  }
+};
+
+
 
 //Create a new user (post)
 const createUser = async (req, res, next) => {
@@ -481,6 +507,7 @@ const forgivenByAdmin = async (req, res, next) => {
 
 
 module.exports = {
+  getFavorites,
   getAllUsers,
   getPro,
   getDbAd,

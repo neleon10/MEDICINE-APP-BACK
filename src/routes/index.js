@@ -3,27 +3,59 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-
-
-
-
-
-
-const {createAppointments, getAppointments, getAppointmentsByProfessional, getAppointmentsByAd, editAppointments, createCancellAppointmentsByUser ,getAppointmentById, getAppointmentsByAdAvailable, getAppointmentsByUser, deleteAppointment, traemeTodo,createHours} = require('../Controllers/controllerAppointments')
-const {getGraficProffesionalById}= require('../Controllers/graficProffesional')
-const {routefilter} = require('../Controllers/controllerFilters')
-const {countries, states, cities}= require('../Controllers/countries')
-const { PaymentRoute } = require('../Controllers/controllerStripePay')
-const  { getAllUsers,getPro,getDbAd,createUser,createProfessional,createAds, getProfessionalById, userId, getAdById, addFavorites, removeFavorites, editProfessional, editUser, editAd,deleteUserById,recoverBymail , deleteUserByAdmin, forgivenByAdmin ,createComments,getComments }  = require ('../Controllers/getPostControllers')
-const {getName}= require('../Controllers/controllerSearch');
-const {getFilterUsers , designeAdmin , degredeAdmin}= require('../Controllers/controllerFiltersAdmin')
-const {getSpecialtys, postSpecialty}= require('../Controllers/controllerSpecialty')
-
-
- 
-
- 
-
+const {
+  createAppointments,
+  getAppointments,
+  getAppointmentsByProfessional,
+  getAppointmentsByAd,
+  editAppointments,
+  createCancellAppointmentsByUser,
+  getAppointmentById,
+  getAppointmentsByAdAvailable,
+  getAppointmentsByUser,
+  deleteAppointment,
+  traemeTodo,
+  createHours,
+} = require("../Controllers/controllerAppointments");
+const {
+  getGraficProffesionalById,
+} = require("../Controllers/graficProffesional");
+const { routefilter } = require("../Controllers/controllerFilters");
+const { countries, states, cities } = require("../Controllers/countries");
+const { PaymentRoute } = require("../Controllers/controllerStripePay");
+const {
+  getAllUsers,
+  getPro,
+  getDbAd,
+  createUser,
+  createProfessional,
+  createAds,
+  getProfessionalById,
+  userId,
+  getAdById,
+  addFavorites,
+  removeFavorites,
+  editProfessional,
+  editUser,
+  editAd,
+  deleteUserById,
+  recoverBymail,
+  deleteUserByAdmin,
+  forgivenByAdmin,
+  createComments,
+  getComments,
+  getFavorites
+} = require("../Controllers/getPostControllers");
+const { getName } = require("../Controllers/controllerSearch");
+const {
+  getFilterUsers,
+  designeAdmin,
+  degredeAdmin,
+} = require("../Controllers/controllerFiltersAdmin");
+const {
+  getSpecialtys,
+  postSpecialty,
+} = require("../Controllers/controllerSpecialty");
 
 const router = Router();
 
@@ -41,11 +73,7 @@ router.get("/professionals/:id", getProfessionalById);
 //get Ad
 router.get("/anuncios", getDbAd);
 
-
-
 router.get("/ad/:id", getAdById);
-
-
 
 //get filter
 router.get("/filter", routefilter);
@@ -72,25 +100,22 @@ router.get(
 //get AppointmentsByAd
 router.get("/appointments/ad/:adId", getAppointmentsByAdAvailable);
 
-
 router.get("/appointments/id/:id", getAppointmentById);
 
+router.get("/appointments/user/:userEmail", getAppointmentsByUser);
 
-router.get('/appointments/user/:userEmail' , getAppointmentsByUser)
+router.get("/appointments/all/:medicalLicense", traemeTodo);
 
-router.get('/appointments/all/:medicalLicense', traemeTodo)
-
-router.get('/comments/all' , getComments)
-
+router.get("/comments/all", getComments);
 
 //get proffesional grafic by medical license
-router.get('/grafic/:medicalLicense', getGraficProffesionalById)
+router.get("/grafic/:medicalLicense", getGraficProffesionalById);
 
-
+//get ads favorites
+router.post('/favoritesAds', getFavorites)
 
 //*******ADMIN ROUTES */
-router.get('/filterAdmin', getFilterUsers)
-
+router.get("/filterAdmin", getFilterUsers);
 
 // ******** POSTS ***********//
 
@@ -109,14 +134,11 @@ router.post("/ad", createAds);
 
 //createAppointment
 
-router.post('/appointment', createAppointments)
-router.post('/appointment/cancelled/:idApp', createCancellAppointmentsByUser)
-router.post('/appointment/hours', createHours)
+router.post("/appointment", createAppointments);
+router.post("/appointment/cancelled/:idApp", createCancellAppointmentsByUser);
+router.post("/appointment/hours", createHours);
 
-
-
-router.post('/comments/user' , createComments)
-
+router.post("/comments/user", createComments);
 
 //recover user by mail and password
 router.put("/restore", recoverBymail);
@@ -138,28 +160,20 @@ router.put("/professional/:MedicalLicense", editProfessional);
 
 //put appointments
 
-router.put('/appointments/edit/:AppId', editAppointments)
+router.put("/appointments/edit/:AppId", editAppointments);
 
-router.delete('/delete/appointment/:id', deleteAppointment)
+router.delete("/delete/appointment/:id", deleteAppointment);
 
+router.put("/Admindelete/:id", deleteUserByAdmin);
 
+router.put("/Adminforgive/:email", forgivenByAdmin);
 
-router.put('/Admindelete/:id',deleteUserByAdmin)
+router.put("/adminDesigne/:id", designeAdmin);
 
-
-
-router.put('/Adminforgive/:email',forgivenByAdmin)
-
-
-router.put('/adminDesigne/:id',designeAdmin)
-
-
-
-router.put('/adminDegrede/:id',degredeAdmin)
+router.put("/adminDegrede/:id", degredeAdmin);
 
 router.get("/specialtys", getSpecialtys);
 
 router.post("/specialty", postSpecialty);
-
 
 module.exports = router;
