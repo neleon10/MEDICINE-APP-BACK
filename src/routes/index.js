@@ -3,6 +3,7 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
+
 const {
   createAppointments,
   getAppointments,
@@ -57,6 +58,7 @@ const {
   postSpecialty,
 } = require("../Controllers/controllerSpecialty");
 
+
 const router = Router();
 
 //get users
@@ -98,6 +100,7 @@ router.get(
 );
 
 //get AppointmentsByAd
+
 router.get("/appointments/ad/:adId", getAppointmentsByAdAvailable);
 
 router.get("/appointments/id/:id", getAppointmentById);
@@ -117,6 +120,7 @@ router.post('/favoritesAds', getFavorites)
 //*******ADMIN ROUTES */
 router.get("/filterAdmin", getFilterUsers);
 
+
 // ******** POSTS ***********//
 
 // Create a new User.
@@ -134,11 +138,13 @@ router.post("/ad", createAds);
 
 //createAppointment
 
+
 router.post("/appointment", createAppointments);
 router.post("/appointment/cancelled/:idApp", createCancellAppointmentsByUser);
 router.post("/appointment/hours", createHours);
 
 router.post("/comments/user", createComments);
+
 
 //recover user by mail and password
 router.put("/restore", recoverBymail);
@@ -160,6 +166,7 @@ router.put("/professional/:MedicalLicense", editProfessional);
 
 //put appointments
 
+
 router.put("/appointments/edit/:AppId", editAppointments);
 
 router.delete("/delete/appointment/:id", deleteAppointment);
@@ -172,8 +179,11 @@ router.put("/adminDesigne/:id", designeAdmin);
 
 router.put("/adminDegrede/:id", degredeAdmin);
 
+
+
 router.get("/specialtys", getSpecialtys);
 
 router.post("/specialty", postSpecialty);
+
 
 module.exports = router;
