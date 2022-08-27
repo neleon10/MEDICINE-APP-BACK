@@ -4,22 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const Medical_Record = require('./models/Medical_Record');
 const {
-  DATABASE_URL
+  DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(DATABASE_URL, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/medicineapp`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false,// lets Sequelize know we can use pg-native for ~30% more speed
 
-
-
-  //extra configuration for heroku
-  dialectOptions:{
-    ssl:{
-      require:true,
-      rejectUnauthorized:false
-    }
-  },
 
 });
 const basename = path.basename(__filename);
