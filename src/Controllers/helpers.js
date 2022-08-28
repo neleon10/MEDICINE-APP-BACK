@@ -28,7 +28,7 @@ const makeAppointment=(dates, hours)=>{
 
 const checking =async (dates,hours,professionalMedicalLicense)=>{
     const appointments=makeAppointment(dates,hours)
-   console.log('appppppppp', appointments)
+//    console.log('appppppppp', appointments)
     const checkingApp={availableApp:[],busyApp:[]}
             for(let i=0; i< appointments.length; i++){
                
