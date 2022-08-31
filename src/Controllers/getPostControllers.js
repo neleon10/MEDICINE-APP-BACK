@@ -25,7 +25,7 @@ const getAllUsers = async (req, res, next) => {
 const userId = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log('soy req.params',req.params)
+    console.log('Esta llegando undefind el ID en user by ID',req.params)
     
 
     const userById = await User.findByPk(id, {
