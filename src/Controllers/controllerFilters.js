@@ -128,6 +128,11 @@ const routefilter=async(req,res,next)=>{
         }
         else{
                 console.log('entre en existe nombre')
+                if(specialty === 'undefined' && country === 'undefined' && province === 'undefined' && city === 'undefined' ){
+                    newFilter= adFilter.filter(e=> e.serviceType===typeService)
+                    return res.status(200).send(newFilter)     
+
+                }
                 
             
                 if(specialty === 'undefined'){
@@ -136,25 +141,25 @@ const routefilter=async(req,res,next)=>{
                     if(country !== 'undefined' || province !== 'undefined' || city !== 'undefined'){
     
                         if(country !== 'undefined' && province !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.professional.user.country=== country && e.professional.user.province=== province && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=>e.professional.user.country=== country && e.professional.user.province=== province && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('15')
                             return res.status(200).send(newFilter)
                         }
     
                         if(country !== 'undefined' && province !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.professional.user.country=== country && e.professional.user.province=== province)
+                            newFilter= adFilter.filter(e=>e.professional.user.country=== country && e.professional.user.province=== province && e.serviceType===typeService)
                             console.log('16')
                             return res.status(200).send(newFilter)
                         }
     
                         if(country !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.professional.user.country=== country  && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=>e.professional.user.country=== country  && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('17')
                             return res.status(200).send(newFilter)
                         }
     
                         if(province !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=> e.professional.user.province=== province && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=> e.professional.user.province=== province && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('18')
                             return res.status(200).send(newFilter)
                         }
@@ -162,19 +167,19 @@ const routefilter=async(req,res,next)=>{
     
     
                         if(country !== 'undefined' ){
-                            newFilter= adFilter.filter(e=>e.professional.user.country=== country)
+                            newFilter= adFilter.filter(e=>e.professional.user.country=== country && e.serviceType===typeService)
                             console.log('19')
                             return res.status(200).send(newFilter)
                         }
                         
                         if(province !== 'undefined'){
                             console.log('20');
-                            newFilter= adFilter.filter(e=> e.professional.user.province=== province)
+                            newFilter= adFilter.filter(e=> e.professional.user.province=== province && e.serviceType===typeService)
                             return res.status(200).send(newFilter)
                         }
                         else{
                             
-                            newFilter= adFilter.filter(e=> e.professional.user.city=== city)
+                            newFilter= adFilter.filter(e=> e.professional.user.city===city && e.serviceType===typeService)
                             console.log('21')
                             return res.status(200).send(newFilter)
                         }
@@ -184,25 +189,25 @@ const routefilter=async(req,res,next)=>{
                     if(country !== 'undefined' || province !== 'undefined' || city !== 'undefined'){
     
                         if(country !== 'undefined' && province !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country && e.professional.user.province=== province && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country && e.professional.user.province=== province && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('23')
                             return res.status(200).send(newFilter)
                         }
     
                         if(country !== 'undefined' && province !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country && e.professional.user.province=== province)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country && e.professional.user.province=== province && e.serviceType===typeService)
                             console.log('24')
                             return res.status(200).send(newFilter)
                         }
     
                         if(country !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country  && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country  && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('25')
                             return res.status(200).send(newFilter)
                         }
     
                         if(province !== 'undefined' && city !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.province=== province && e.professional.user.city===city)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.province=== province && e.professional.user.city===city && e.serviceType===typeService)
                             console.log('soy pais=> new filter')
                             return res.status(200).send(newFilter)
                         }
@@ -210,29 +215,29 @@ const routefilter=async(req,res,next)=>{
     
     
                         if(country !== 'undefined' ){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.country=== country && e.serviceType===typeService)
                             console.log('soy pais=> new filter')
                             return res.status(200).send(newFilter)
                         }
                         
                         if(province !== 'undefined'){
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.province=== province)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.province=== province && e.serviceType===typeService)
                             return res.status(200).send(newFilter)
                         }
                         else{
                             
-                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.city=== city)
+                            newFilter= adFilter.filter(e=>e.specialty===specialty && e.professional.user.city=== city&& e.serviceType===typeService)
                             console.log('pais=>', newFilter)
                             return res.status(200).send(newFilter)
                         }
                     }         
                         console.log('entre en el correcto, solo especialidad!!!!!!')
-                        newFilter= adFilter.filter(e=> e.specialty===specialty)
+                        newFilter= adFilter.filter(e=> e.specialty===specialty && e.serviceType===typeService)
                         return res.status(200).send(newFilter)              
                 }
-                const newFilter = adFilter.filter(e=> e.serviceType===typeService)   
-                      console.log('soy el sevicio')
-                      return res.status(200).send(newFilter) 
+
+                  
+                
             }
         }
 
