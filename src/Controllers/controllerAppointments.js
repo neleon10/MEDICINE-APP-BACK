@@ -14,10 +14,10 @@ const {
 const createAppointments=async(req, res, next)=>{
     try {
         const {hours, dates, professionalMedicalLicense, ad}= req.body
-        console.log('hrs', hours)
+        // console.log('linea 17 ctl app.... hrs', hours)
         const appointments = await checking(dates,hours,professionalMedicalLicense)
-        console.log('soy el ad', ad)
-        console.log('appointments', appointments)
+        //console.log('soy el ad', ad)
+        // console.log('linea 20 ctl app....appointments', appointments)
        if(appointments.availableApp.length> 0){
        
             let apps = appointments.availableApp.map((app)=>{
@@ -30,7 +30,7 @@ const createAppointments=async(req, res, next)=>{
                 adId: ad 
                 }
             })
-       
+                //  console.log('apps linea 33 control ap',apps)
                await Appointment.bulkCreate(apps);  
     
                res.status(200).send(appointments); 
@@ -60,7 +60,7 @@ const getAppointments = async(req,res,next)=>{
 //trae los turnos de cada profesional (se usa en el perfil del medico, para ver los turnos en cada anuncio por separado)
 const getAppointmentsByProfessional = async(req,res,next)=>{
     const { professionalMedicalLicense, id} = req.params;
-    console.log('llegue')
+    //console.log('llegue')
     try{
         
         let app = await Appointment.findAll({
@@ -189,12 +189,12 @@ const editAppointments = async (req, res, next) => {
   const createCancellAppointmentsByUser=async(req, res, next)=>{
     try {    
         const {idApp}=req.params
-        console.log('idaaaa',idApp)
+        //console.log('idaaaa',idApp)
         if(idApp){
 
             const appointments = await Appointment.findByPk(idApp)
     
-            console.log('appsssss', appointments.dataValues)
+            // console.log('appsssss', appointments.dataValues)
            
                 let apps ={ 
                   
@@ -220,7 +220,7 @@ const editAppointments = async (req, res, next) => {
 //funcion para que el medico pueda eliminar un turno creado por el
 const deleteAppointment = async(req,res,next)=>{
 	let {id} = req.params
-    console.log(id)
+    //console.log(id)
 	try {
 		await Appointment.destroy({where:{id}})
 		res.send('appointment deleted')		
@@ -235,7 +235,7 @@ const createHours = async(req, res, next)=>{
     try {
         
         let {startTime, endTime, duration}=req.body
-        console.log('la action entro al back con estos datos==>', req.body);
+        // console.log('la action entro al back con estos datos==>', req.body);
 
         if(!startTime) return res.status(400).send('falta tiempo inicial')
         if(!endTime) return res.status(400).send('falta tiempo final')
@@ -266,13 +266,13 @@ const createHours = async(req, res, next)=>{
             next=current
         } 
     
-        while (next < y);
+        while (next <= y);
     
         // creo un array de objetos en base a los horarios obtenidos en numHour
         let objHours = numHour.map(e => {
         return{ start: e, end:e + durationtime}   
         });
-    
+    // console.log('linea275 ctrlapp, objHours',objHours)
     
     // creo el horario de comienzo y de finalización de cada turno
         let hours= objHours.map(el=>{
@@ -372,9 +372,9 @@ const createHours = async(req, res, next)=>{
         })
     //para que no tome la hora final como comienzo de un turno y si es un solo turno lo transformamos en array.
         let hoursFilter= []
-        console.log('creo estos horarios sin filtros', hours)
+    //    console.log('creo estos horarios sin filtros', hours)
         !Array.isArray(hours)? hoursFilter.push(hours): hoursFilter=[...hours]
-    console.log('tengo en back estos horarios creados===>', hoursFilter)
+//    console.log('tengo en back estos horarios creados===>', hoursFilter)
      return res.status(200).send(hoursFilter)
         
     } catch (error) {

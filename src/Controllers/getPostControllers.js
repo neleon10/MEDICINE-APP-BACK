@@ -25,13 +25,13 @@ const getAllUsers = async (req, res, next) => {
 const userId = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log('soy req.params',req.params)
+
     
 
     const userById = await User.findByPk(id, {
       include: [{ model: Professional, include: [Ad] }],
     });
-    console.log('soy userById',userById)
+    //console.log('soy userById',userById)
     !userById
       ? res.status(404).send({ message: "User not found" })
       : res.status(200).send(userById);
@@ -86,7 +86,7 @@ const getDbAd = async (req, res, next) => {
 const getAdById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log('id', id)
+    //console.log('id', id)
     let ad = await Ad.findByPk(id, {
       include: [{ model: Professional, include: [User]}, {model:Appointment, where:{adId:id}}],
     });
@@ -95,7 +95,7 @@ const getAdById = async (req, res, next) => {
         include: [{ model: Professional, include: [User]}, {model:Appointment}],
       });
     }
-    console.log('ad', ad)
+    //console.log('ad', ad)
     if (!ad) return res.status(404).send({ message: "Nope, no ads here!" });
     res.status(200).send(ad);
   } catch (e) {
@@ -106,7 +106,7 @@ const getAdById = async (req, res, next) => {
 const getFavorites = async (req, res, next) => {
   try {
     const {favorites } = req.body;
-    console.log(favorites, 'soy los favoritos')
+    //console.log(favorites, 'soy los favoritos')
     //console.log('id', id)
     
     const allAdsFavorites= [];
@@ -118,7 +118,7 @@ const getFavorites = async (req, res, next) => {
     }
      
    
-      console.log(allAdsFavorites, 'soy ads')
+      //console.log(allAdsFavorites, 'soy ads')
       res.status(200).send(allAdsFavorites);
       
    
@@ -131,7 +131,7 @@ const getFavorites = async (req, res, next) => {
 
 //Create a new user (post)
 const createUser = async (req, res, next) => {
-  console.log("llegue aca")
+  //console.log("llegue aca")
   try {
     let {
       email,
@@ -150,7 +150,7 @@ const createUser = async (req, res, next) => {
       gps,
       favorites,
     } = req.body;
-    console.log(req.body)
+    //console.log(req.body)
    if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)){
     return res.status(404).send("el mail no es valido")
    }
@@ -191,7 +191,7 @@ const createUser = async (req, res, next) => {
     });
 
 
-    console.log(userCreated);
+    //console.log(userCreated);
     if (!userCreated)
       return res.status(418).send({ message: "Oops user not created" });
     res.status(201).send({ message: "User created successfully" });
@@ -458,7 +458,7 @@ const deleteUserById = async (req, res, next) => {
 
 const deleteUserByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  console.log (id)
+  //console.log (id)
   try {
     const userDeletedByAdmin = await User.update( 
     {
@@ -480,7 +480,7 @@ const deleteUserByAdmin = async (req, res, next) => {
 
 const forgivenByAdmin = async (req, res, next) => {
   const { email } = req.params;
-  console.log("soy el email", email)
+  //console.log("soy el email", email)
   try {
     const userRecovered = await User.update(
       {
