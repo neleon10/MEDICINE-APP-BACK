@@ -45,7 +45,8 @@ const {
   forgivenByAdmin,
   createComments,
   getComments,
-  getFavorites
+  getFavorites,
+  deleteAd
 } = require("../Controllers/getPostControllers");
 const { getName } = require("../Controllers/controllerSearch");
 const {
@@ -76,6 +77,7 @@ router.get("/professionals/:id", getProfessionalById);
 router.get("/anuncios", getDbAd);
 
 router.get("/ad/:id", getAdById);
+
 
 //get filter
 router.get("/filter", routefilter);
@@ -184,6 +186,10 @@ router.put("/adminDegrede/:id", degredeAdmin);
 router.get("/specialtys", getSpecialtys);
 
 router.post("/specialty", postSpecialty);
+
+//delete ad
+
+router.delete('/deleteAd/:idAd', deleteAd)
 
 
 module.exports = router;

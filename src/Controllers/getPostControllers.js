@@ -399,6 +399,23 @@ const editAd = async (req, res, next) => {
   } catch (e) {
     next(e)
 };
+};
+
+//delete Ad
+
+const deleteAd= async(req, res,next)=>{
+  const {idAd}= req.params
+  try {
+    let adById= await Ad.findByPk(idAd)
+    if(adById){
+      await adById.destroy()
+      res.status(200).send('ad deleted succesfully')
+    }else{
+      res.status(400).send('ad not found')
+    }
+  } catch (error) {
+    next(error)
+  }
 }
 
 
@@ -527,6 +544,7 @@ module.exports = {
   createComments,
   getComments,
   deleteUserByAdmin,
-  forgivenByAdmin
+  forgivenByAdmin,
+  deleteAd
 };
 
