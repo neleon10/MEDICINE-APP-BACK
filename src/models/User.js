@@ -26,22 +26,23 @@ module.exports = (sequelize) => {
         },
         dateOfBirth: {
             type:DataTypes.DATEONLY,
-            allowNull: false
+            allowNull: true
         },
         identification: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         userimage: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:true
         },
         idImage: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         country: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         city: {
             type: DataTypes.STRING,
@@ -49,7 +50,7 @@ module.exports = (sequelize) => {
         },
         address: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         province: {
             type: DataTypes.STRING,
@@ -57,11 +58,12 @@ module.exports = (sequelize) => {
             
         },
         phone: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull:true
         },
         rol: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         gps: {
             type: DataTypes.STRING,
